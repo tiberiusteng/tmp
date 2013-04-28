@@ -1,0 +1,1651 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-tw" lang="zh-tw" dir="ltr">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>Text Markup Processor 使用手冊</title>
+<style type="text/css">
+/** Column types **/
+
+.caution {
+    background: #ffd8d9;
+    border-color: #aaa;
+}
+
+.note {
+    background: #d8f6ff;
+    border-color: #aaa;
+}
+
+.tip {
+    background: #fffdd8;
+    border-color: #aaa;
+}
+
+.transnote {
+    background: #d9f7d2;
+    border-color: #aaa;
+}
+
+/** Box types **/
+
+.comment {
+    background: #eee;
+    border-color: #aaa;
+}
+
+.editor {
+    background: #fdd;
+    border-color: red;
+    color: red;
+    margin: 1em 0 !important;
+}
+
+.footnote {
+    clear: right;
+    display: inline;
+    float: right;
+    font-size: 0.8em;
+    margin: 1em !important;
+    width: 25em;
+}
+
+.pre {
+    background: #ddf;
+    border-color: #ccf;
+}
+
+/** Inline marking styles **/
+
+.orange {
+    color: #f60;
+}
+
+.redmark {
+    color: #f00;
+    font-weight: bold;
+}
+
+.small {
+    font-size: 80%;
+}
+
+.smallcaps {
+    font-variant: small-caps;
+    color: #900;
+}
+
+.ybg {
+    background: #ff9;
+}
+
+a:link, a:visited {
+    color: #36a;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:active, a:hover {
+    color: #73b;
+    text-decoration: underline;
+}
+
+a.fnanchor {
+    font-family: Arial;
+    font-size: 0.8em;
+    vertical-align: super;
+    color: red !important;
+}
+
+div.footnote a.fnitem {
+    color: red !important;
+    font-weight: bold;
+    font-family: Arial;
+}
+
+ins {background: #bfb}
+del {background: #fcc}
+ins,del {text-decoration: none}
+
+blockquote {
+    border: 1px solid #88f;
+    margin: 1.5em;
+    padding: 10px;
+}
+
+body:lang(zh-tw) {font-family: 'Georgia', '新細明體', 'PMingLiU', serif;}
+body:lang(ja)    {font-family: 'Georgia', 'ＭＳ Ｐ明朝', 'MS PMincho', serif;}
+
+body {
+    font-family: 'Georgia'; /* IE does not support :lang() */
+    background: #fff;
+    line-height: 1.3;
+    margin: 0;
+    padding: 0;
+}
+
+pre, code {
+    font-family: 'Bitstream Vera Sans Mono', 'Andale Mono', 'Courier New', monospace;
+    font-size: 0.95em;
+    white-space: pre;
+    padding: 0 0.2em;
+}
+
+code {
+    color: #741;
+}
+
+th.col code {
+    color: #fff;
+}
+
+div.body {
+    background: #fff;
+    border-left: 15px solid #ffa;
+    padding: 10px 10px 10px 20px;
+    text-autospace: ideograph-alpha;
+}
+
+div.boxHead, table caption {
+    clear: right;
+    background: #8de;
+    color: #002266;
+    margin-top: 1em;
+    border-left: 7px solid #3388aa;
+    padding: 8px 8px 8px 10px;
+    letter-spacing: 1px;
+}
+
+div.boxHead + pre {
+    margin-top: 0;
+}
+
+div.box, pre {
+    border-width: 1px;
+    border-style: solid;
+    clear: right;
+    margin-bottom: 0;
+
+    padding: 10px;
+}
+
+div.box p {
+    text-indent: 0;
+}
+
+blockquote > *:first-child,
+div.box > *:first-child,
+div.column > *:first-child,
+table td > *:first-child {
+    margin-top: 0; 
+}
+
+div.box div.heading {
+    margin-left: 32px;
+    margin-top: 3px;
+}
+
+div.box span.type {
+    font-family: 'Impact';
+    font-size: 1.2em;
+}
+
+div.box span.desc {
+    color: #722;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+div.columnbox {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+div.footnote p {
+    margin: 0;
+}
+
+div.footer {
+    clear: right;
+    margin: 0px;
+    padding: 4px;
+    text-align: right;
+    color: #555;
+    border-top: 3px double #aaa;
+    background: #ddd;
+    font-size: 0.8em;
+    font-family: "Georgia";
+}
+
+div.listItem {
+    border-bottom: 1px dashed #aaa;
+    padding-bottom: 0.5em;
+}
+
+div.listItem p:last-child {
+    margin-bottom: 0;
+}
+
+div.metaInfo {
+    padding: 10px;
+    border-bottom: 1px solid #aaa;
+    border-top: 1px solid #aaa;
+    background: #ddd;
+}
+
+div.pageSeparator {
+/*  border-top: 1px solid #479; */
+    clear: both;
+    margin: 1em 0 1em 0;
+}
+
+div.srcPage {
+    background: #dff;
+    border: 1px solid #479;
+    clear: both;
+    color: #479;
+    font-family: 'Trebuchet MS';
+    font-size: 0.8em;
+    margin-left: -42px;
+    padding: 1px;
+    text-align: center;
+    width: 80px;
+}
+
+dl {
+    margin-left: 20px;
+}
+
+dl dt {
+    font-weight: bold;
+}
+
+dl dd {
+    margin-bottom: 1em;
+}
+
+h1,h2,h3,h4,h5,h6,div.box span.desc {
+    font-family: 'Microsoft JhengHei', 'DFKai-SB'; /* IE does not support :lang() */
+}
+
+h1,h2,h3,h4,h5,h6 {
+    color: #3E424E;
+}
+
+h1:lang(zh-tw),
+h2:lang(zh-tw),
+h3:lang(zh-tw),
+h4:lang(zh-tw),
+h5:lang(zh-tw),
+h6:lang(zh-tw),
+div.box span.desc:lang(zh-tw) {
+    font-family: 'Trebuchet MS', '微軟正黑體', 'Microsoft JhengHei', '標楷體', 'DFKai-SB';
+}
+
+h1:lang(ja),
+h2:lang(ja),
+h3:lang(ja),
+h4:lang(ja),
+h5:lang(ja),
+h6:lang(ja),
+div.box span.desc:lang(ja) {
+    font-family: 'Trebuchet MS', 'ＭＳ Ｐゴシック', 'MS PGothic';
+}
+
+h1,h2,h3,h4 {
+    font-weight: bold;
+}
+
+h1,h2,h3 {
+    clear: both;
+}
+
+h1 {
+    border-bottom: 2px solid #00a;
+    border-left: 10px solid #00a;
+    font-size: 2.2em;
+    margin-top: 1.5em;
+    margin-right: -10px; 
+    margin-left: -30px;
+    padding: 6px 16px;
+}
+
+h2 {
+    border-bottom: 3px double #00f;
+    font-size: 1.9em;
+    margin-top: 1.3em;
+    margin-left: -20px;
+    margin-right: -10px;
+    padding: 3px 8px;
+}
+
+h3 {
+    border-left: 6px solid #55f;
+    border-top: 2px solid #55f;
+    font-size: 1.7em;
+    margin: 1em 0 0.6em -12px;
+    padding: 10px 15px 5px 15px;
+}
+
+h4 {
+    border-bottom: 1px dashed #55f;
+    border-left: 4px solid #bcf;
+    font-size: 1.5em;
+    margin: 1em 0 0.6em -10px;
+    padding: 3px 0.6em;
+}
+
+h5 {
+    border-left: 6px double #495F9D;
+    border-bottom: 1px solid #B9C0D5;
+    margin: 1em 1em 0.6em -2px;
+    padding: 2px 0.4em;
+    font-size: 1.4em;
+}
+
+h6 {
+    border-left: 3px solid #495F9D;
+    font-size: 1.2em;
+    font-weight: normal;
+    padding: 1px 0.5em;
+    margin: 1em 0 0.6em 0;
+}
+
+img {
+    /* for IE PNG transparency */
+    behavior: url(pngHack.htc);
+
+    border: 0;
+    margin: 10px;
+}
+
+img.column {
+    float: left;
+    display: inline;
+    border: 0;
+    margin: 0 5px 5px 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+
+img.mimetex {
+    background: #ffc;
+    padding: 2px !important;
+    margin: 0 !important;
+    vertical-align: text-bottom;
+}
+
+li {
+    /* see div.listItem definition. F**king IE CSS support! */
+    padding-top: 0.5em;
+}
+
+p {
+    padding: 0;
+    text-indent: 2em;
+}
+
+h1 + p,
+h2 + p,
+h3 + p,
+h4 + p,
+h5 + p,
+h6 + p,
+div.footnote + p {
+    text-indent: 0;
+}
+
+p.label {
+    margin-right: 20% !important;
+    margin-left: 44px !important;
+    text-indent: 0px;
+    padding: 2px;
+}
+
+li p {
+    text-indent: 0;
+}
+
+#metaInfo {
+    display: none;
+}
+
+#metaInfo li,
+.compact li {
+    padding: 0;
+    border: none;
+}
+
+pre {
+    clear: right;
+    font-size: 0.95em;
+    /* see div.box */
+}
+
+span.control {
+    background: #fec;
+    border: 1px solid #fa4;
+    color: #d82;
+    cursor: pointer;
+    font-family: 'Arial';
+    font-size: 0.7em;
+    margin-left: 15px;
+    padding: 3px;
+    text-decoration: underline;
+}
+
+span.headAnchor {
+    color: #722;
+    padding-right: 0.5em;
+}
+
+span.keyboard {
+    background-color: #eee;
+    border: 1px solid;
+    border-color: #ccc #555 #555 #ccc;
+    font-family: 'Arial';
+    padding: 1px;
+}
+
+span.label {
+    padding: 3px;
+    margin: 3px 10px 3px 6px;
+    font-size: 0.7em;
+    vertical-align: middle;
+    font-family: Arial;
+}
+
+span.url {
+    background-color: #6BE593;
+    border: 1px solid #0E7931;
+    color: #075220;
+    margin-left: -40px;
+}
+
+table {
+    margin-bottom: 1em;
+}
+
+table caption {
+    margin-top: 1em;
+    text-align: left;
+
+}
+
+table tr {
+    background: #fff;
+}
+
+table td, table th {
+    padding: 8px 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #999;
+    border-right: 1px solid #999;
+}
+
+table td {
+    background: #eee;
+}
+
+table th {
+    font-weight: bold;
+}
+
+table th.col {
+    background: #38a;
+    color: #fff;
+}
+
+table th.row {
+    background: #ccc;
+    text-align: left;
+}
+
+/*
+u {
+    background: #eff;
+}
+*/
+
+@media print {
+    body, table {
+        font-size: 10pt;
+    }
+
+    div.body {
+        margin: 0 0 0 10px;
+        border: 0;
+    }
+
+    div.metaInfo {
+        display: none;
+    }
+
+    div.srcPage {
+        margin-left: -25px;
+        width: 1.5cm;
+        padding: 1mm;
+        text-align: center;
+        border: 1px solid #888888;
+    }
+
+    h1, h2, h3, h4, h5, h6, div.boxHead, div.srcPage {
+        page-break-after: avoid;
+    }
+    
+    div.footer {
+        text-align: center;
+    }
+}
+</style>
+</head>
+<body onload="javascript:hasIE_hideAndShow();">
+<script type="text/javascript" src="iedetect.js"></script>
+<script type="text/javascript">
+function toggle() {
+    var obj = document.getElementById("metaInfo");
+    obj.style.display = (obj.style.display == 'none') ? 'block' : 'none';
+}
+</script>
+<div class="metaInfo">
+<span class="control" onclick="toggle();"  style="cursor: pointer;">Show/Hide Metadata</span>
+<div id="metaInfo">
+<dl><dt>Page list</dt><dd>
+<a href="#page0">p.0</a> / 
+<a href="#pagei">p.i</a> / 
+<a href="#pagexv">p.xv</a> / 
+<a href="#page1">p.1</a> / 
+<a href="#page23">p.23</a> / 
+<a href="#page456">p.456</a> / 
+<a href="#page7890">p.7890</a> / 
+<a href="#page5">p.5</a> / 
+<a href="#page6">p.6</a> / 
+<a href="#page7">p.7</a> / 
+<a href="#page8">p.8</a> / 
+<a href="#page9">p.9</a>
+</dd></dl>
+<dl><dt>Table of Contents</dt><dd>
+<ul id="toc"><li><a href="#header1">1. Text Markup Processor 簡介</a></li>
+<ul>
+<li><a href="#header2">1.1. 輸出入格式</a></li>
+<li><a href="#header3">1.2. 執行方式</a></li>
+<li><a href="#header4">1.3. 主要語法</a></li>
+<ul>
+<li><a href="#header5">1.3.1. 需要跳脫 (escape) 的部分</a></li>
+<ul>
+<li><a href="#header6">1.3.1.1. 提早結束標籤判斷範圍</a></li>
+<li><a href="#header7">1.3.1.2. 省略方括弧</a></li>
+</ul>
+<li><a href="#header8">1.3.2. 內建標籤</a></li>
+<ul>
+<li><a href="#header9">1.3.2.1. \include</a></li>
+<li><a href="#header10">1.3.2.2. \use</a></li>
+</ul>
+</ul>
+</ul>
+<li><a href="#header11">2. Translator Markup Pack</a></li>
+<ul>
+<li><a href="#header12">2.1. 內文分段</a></li>
+<li><a href="#header13">2.2. 標籤說明</a></li>
+<ul>
+<li><a href="#header14">2.2.1. 頁面選項設定</a></li>
+<ul>
+<li><a href="#header15">2.2.1.1. 選擇語系</a></li>
+<li><a href="#header16">2.2.1.2. 文件標題</a></li>
+<li><a href="#header17">2.2.1.3. 內容組織功能</a></li>
+<li><a href="#header18">2.2.1.4. 專案</a></li>
+</ul>
+<li><a href="#header19">2.2.2. 標題</a></li>
+<ul>
+<li><a href="#header20">標題 4</a></li>
+<ul>
+<li><a href="#header21">標題 5</a></li>
+<ul>
+<li><a href="#header22">標題 6</a></li>
+</ul>
+</ul>
+</ul>
+<li><a href="#header23">2.2.3. 頁數編碼</a></li>
+<li><a href="#header24">2.2.4. 連結</a></li>
+<ul>
+<li><a href="#header25">2.2.4.1. 專案檔案的處理順序</a></li>
+</ul>
+<li><a href="#header26">2.2.5. HTML 特殊字元實體</a></li>
+<li><a href="#header27">2.2.6. 簡單的標記</a></li>
+<li><a href="#header28">2.2.7. 表格</a></li>
+<ul>
+<li><a href="#header29">2.2.7.1. 格式化字串</a></li>
+<ul>
+<li><a href="#header30">格式化字串，舉例</a></li>
+<li><a href="#header31">實際表格舉例</a></li>
+</ul>
+</ul>
+<li><a href="#header32">2.2.8. 清單</a></li>
+<ul>
+<li><a href="#header33">2.2.8.1. 一般清單</a></li>
+<li><a href="#header34">2.2.8.2. 定義清單</a></li>
+</ul>
+<li><a href="#header35">2.2.9. 方塊</a></li>
+<ul>
+<li><a href="#header36">2.2.9.1. 方塊標題與方塊的組合</a></li>
+<li><a href="#header37">2.2.9.2. 程式碼方塊</a></li>
+<li><a href="#header38">2.2.9.3. 各種方塊的應用示範</a></li>
+</ul>
+<li><a href="#header39">2.2.10. 註腳</a></li>
+<li><a href="#header40">2.2.11. 連結項目</a></li>
+<li><a href="#header41">2.2.12. TODO: 自動索引</a></li>
+<li><a href="#header42">2.2.13. TODO: 內嵌數學式</a></li>
+<li><a href="#header43">2.2.14. TODO: 專欄</a></li>
+</ul>
+</ul>
+</ul>
+</dd></dl>
+</div>
+</div>
+<div id="hasIE_level1" style="display: none;">
+<div style="background: #ffb; padding: 20px; font-weight: bold;">
+本頁有許多舊版 Internet Explorer 無法正確顯示的排版效果，如列表標題、縮排、首段上方留白、旁註等等<br />
+因此建議您改用 <a href="http://www.moztw.org/">Mozilla Firefox</a>, <a href="http://www.opera.com/">Opera</a> 或<a href="http://www.microsoft.com/windows/ie/downloads/default.mspx">升級 Internet Explorer</a> 瀏覽本頁，如此可得最正確的結果。
+</div>
+</div>
+<div class="body"><div id="page0" class="srcPage">p.0</div>
+<div class="pageSeparator"></div>
+<h1 id="header1"><span class="headAnchor">1.</span>Text Markup Processor 簡介</h1>
+<p>
+Text Markup Processor (以下簡稱 tmp) 是個以 <a href="http://www.python.org/">Python</a> 撰寫的轉譯器架構。
+</p>
+<p>
+透過 Markup Pack (以下簡稱 pack，同樣以 Python 撰寫) 的協助，它能將純文字輸入檔轉為各式各樣的輸出內容。
+</p>
+<p>
+目前唯一隨附的 pack 是 <code>translator</code>，它能處理最初開發這套工具想要解決的最主要問題 &mdash; 以簡潔的語法，使用 HTML 格式輸出漂亮的中間翻譯稿件。
+</p>
+<h2 id="header2"><span class="headAnchor">1.1.</span>輸出入格式</h2>
+<p>
+輸出檔隨 pack 的設計而有所不同，不過輸入檔一概是 UTF-8 編碼的純文字檔案；檔名可任意選用，但建議以 <code>.tm</code> 作為原始檔附檔名。
+</p>
+<h2 id="header3"><span class="headAnchor">1.2.</span>執行方式</h2>
+<div class="boxHead">語法</div>
+<pre class="pre">
+tmp <b>&lt;輸入檔名&gt;</b> [<b>&lt;輸入檔名&gt;</b>, ...]
+</pre>
+<div class="boxHead">範例</div>
+<pre class="pre">
+tmp manual.tm
+tmp toc.tm ch1.tm ch2.tm
+tmp *.tm
+</pre>
+<p>
+第一行是將 <code>manual.tm</code> 轉換成 <code>manual.htm</code>，也就是輸出本說明檔時必須執行的指令。
+</p>
+<p>
+第二行則會將三個指定的檔案一次轉換好，分別存成不同的 <code>.htm</code> 檔。
+</p>
+<p>
+第三行則會轉換現行目錄之內，所有副檔名是 <code>.tm</code> 的檔案。
+</p>
+<p>
+轉換的過程中，每處理好一個檔案就會顯示對應的檔名；處理檔案的時候如果遇到錯誤的話，則會顯示第一個發生錯誤的位置，並且繼續處理下一個檔案。目前的架構設計沒有辦法一次抓出檔案之內所有可能錯誤的地方
+</p>
+<h2 id="header4"><span class="headAnchor">1.3.</span>主要語法</h2>
+<p>
+TMP 的語法標籤只有以下兩種主要格式:
+</p>
+<pre class="pre">
+\標籤<i>(參數1,參數2,...)</i><b>[</b>內容<b>]</b>
+
+\標籤<i>(參數1,參數2,...)</i><b>[[</b>內容<b>]]</b>
+</pre>
+<p>
+其中只有 <code>\標籤</code> 的部分是必要的，參數以及內容都只有在需要用到的時候才需要附上。
+</p>
+<p>
+第二種語法 (雙方括號) 的內容之中，如果出現單獨一個
+</p>
+<h3 id="header5"><span class="headAnchor">1.3.1.</span>需要跳脫 (escape) 的部分</h3>
+<p>
+tmp 原始碼內需要進行跳脫動作的，只有下面幾個地方:
+</p>
+<ul>
+<li><div class="listItem">參數列部分</div></li>
+  <ul>
+    <li><div class="listItem">如果參數內容用到 <code>,</code> (逗號)、<code>)</code> (右圓括號)、<code>\</code> (反斜線) 這三個符號的時候，前面必須加上 <code>\</code>。</div></li>
+  </ul>
+<li><div class="listItem">單方括號內容部分 (放在 <b>[</b> ... <b>]</b> 之內的部分)</div></li>
+  <ul>
+    <li><div class="listItem">內容用到 <code>\</code> 符號的話，前面必須再加上一個 <code>\</code> 符號 (避免被解讀成標籤呼叫)。</div></li>
+    <li><div class="listItem">如果內容第一個字是 <code>[</code> 的話，可以在前面加上空白或是 <code>\</code> 符號 (避免被解讀成雙方括號內容)。</div></li>
+    <li><div class="listItem">內容用到 <code>]</code> (右方括號) 的時候，前面必須加上 <code>\</code> 符號 (避免提早結束作用範圍)。</div></li>
+  </ul>
+<li><div class="listItem">雙方括號內容部分 (放在 <b>[[</b> ... <b>]]</b> 之內的部分)</div></li>
+  <ul>
+    <li><div class="listItem">內容用到 <code>\</code> 符號的話，前面必須再加上一個 <code>\</code> 符號 (避免被解讀成標籤呼叫)。</div></li>
+    <li><div class="listItem">內容出現連續兩個 <code>]</code> 符號 (也就是 <code>]]</code>) 的時候，必須在前面加上一個 <code>\</code> 符號 (避免提早結束作用範圍)。</div></li>
+  </ul>
+<li><div class="listItem">標籤部分</div></li>
+  <ul>
+    <li><div class="listItem">如果往後緊接著 <code>(</code> 或是 <code>[</code> 符號，卻又不想讓它被解釋成參數列、內容區的話，同樣在前面加上 <code>\</code> 即可。</div></li>
+  </ul>
+</ul>
+<p>
+簡單來說，就是內容使用到語法內的特殊符號、有可能造成疑義誤判的情形之下，就需要在前面加上 <code>\</code> 符號進行跳脫動作。乍看之下有些複雜，不過只需要選對編輯器 (比如說用 <a href="http://www.vim.org/">vim</a> 配上語法彩色檔)，進行跳脫就會變得十分簡易 &mdash; 因為會造成誤判的地方，原始碼就會顯示成預期之外的顏色；適當地補上 <code>\</code> 符號之後，原始碼的色彩才會恢復正常。
+</p>
+<p>
+因此雙方括號很適合在標註程式碼之類，內含不少方括號的內容時使用，如此只需跳脫連續的右方括號即可，不需要為每個方括號加上 <code>\</code>。
+</p>
+<h4 id="header6"><span class="headAnchor">1.3.1.1.</span>提早結束標籤判斷範圍</h4>
+<p>
+舉例來說，假設您想以 <code>translator</code> 這套內附的 markup pack 排出這段文字:
+</p>
+<div class="box ">
+&lt;test&gt;</div>
+<p>
+由於 <code>translator</code> 允許在內容之中使用 XHTML 標籤，因此不能直接依原樣輸入左右尖括號，而必須以對應的 <code>\lt</code>、<code>\gt</code> 替代才行。不過，直接寫成 <code>\lttest\gt</code> 的話，前段會被當成單獨一個標籤解釋；單純以空白隔開、輸入成 <code>\lt test \gt</code> 的話，又會在內容之中插入額外的空白:
+</p>
+<div class="box ">
+&lt; test &gt;</div>
+<p>
+遇到這種情形的時候，有兩種方法可以解決: 使用空白參數或是空白內容。也就是說，寫成下面這兩行的形式，都可以達成預期的效果:
+</p>
+<pre class="pre">
+\lt[]test\gt
+\lt()test\gt
+</pre>
+<p>
+兩種寫法的效果完全相同。差異之處只有第一行輸入的時候不必按 <span class="keyboard">SHIFT</span> 而已 ... (所以有人真的會想用第二種寫法嗎)
+</p>
+<h4 id="header7"><span class="headAnchor">1.3.1.2.</span>省略方括弧</h4>
+<p>
+寫 HTML 的時候，常常會需要用好幾組標籤同時修飾一段內容，比如說這樣:
+</p>
+<div class="box ">
+<p>
+<b><i><u>some fancy styles</u></i></b>
+</p>
+</div>
+<p>
+在以往這得用上三層巢狀標籤才有辦法解決！就算是拿 <code>translator</code> 提供的標籤來寫，堆起來之後也可能會變成這樣:
+</p>
+<pre class="pre">
+\b[\i[\u[some fancy styles]]]
+</pre>
+<p>
+為了簡化這類內容的輸入動作，因此在這種特殊的情形下 &mdash; 也就是<b>標籤作用範圍之內剛好只有一個標籤</b>的狀況下，允許省略開頭、結尾的方括號，此時標籤會直接以下一個標籤的全部內容當成作用範圍！
+</p>
+<p>
+因此現在可以簡寫成這樣，得到相同的效果:
+</p>
+<pre class="pre">
+\b\i\u[some fancy styles]
+</pre>
+<p>
+當然，這只對<b>具備作用範圍</b>的標籤才有作用；直接輸出特殊符號、文字的標籤 (比如說 <code>translator</code> 的 <code>\euro</code> 標籤) 不需要也不受這項功能的影響，後面可以直接放上其他標籤。
+</p>
+<p>
+如果因為某些原因，您不希望連寫在一起的幾個標籤被解釋成巢狀關係、而這些標籤又不具備任何內容的話，您可依樣畫葫蘆用前面提過的標籤範圍結束法把標籤的處理範圍打斷:
+</p>
+<pre class="pre">
+\b[]\i\u[some fancy styles]
+</pre>
+<p>
+處理之後會變成下面的結果:
+</p>
+<div class="box ">
+<p>
+<b></b><i><u>some fancy styles</u></i>
+</p>
+</div>
+<p>
+粗體不見了！但是檢視原始碼會發現，原來 <code>\b</code> 標籤裡面沒有任何內容、跑到前面去了 ... 這樣到底有什麼意義呢？
+</p>
+<h3 id="header8"><span class="headAnchor">1.3.2.</span>內建標籤</h3>
+<p>
+tmp 本身內建兩個標籤，其餘功能均由針對特定問題撰寫的 pack 負責提供。
+</p>
+<h4 id="header9"><span class="headAnchor">1.3.2.1.</span>\include</h4>
+<div class="boxHead">語法</div>
+<pre class="pre">
+\include(<b>&lt;檔名&gt;</b>)
+</pre>
+<p>
+使用這個標籤，就像是以 <code><b>&lt;檔名&gt;</b></code> 檔案的內容替換掉這個標籤之後再進行處理一樣。您可使用這個標籤，在許多檔案之內共享一段經常用到，或是有需要同步變更、維持一致的內容。
+</p>
+<div class="boxHead">範例</div>
+<pre class="pre">
+\include(copyright.tm)
+</pre>
+<h4 id="header10"><span class="headAnchor">1.3.2.2.</span>\use</h4>
+<div class="boxHead">語法</div>
+<pre class="pre">
+\use(<b>&lt;pack 名稱&gt;</b>)
+</pre>
+<p>
+此指令會載入指定名稱的 pack 以便應用其中提供的功能。大部分原始碼應該都會在檔案開頭以這個標籤載入某個 pack，之後再使用這個 pack 所提供的標籤繼續撰寫往後的內容。
+</p>
+<p>
+您不能重複載入相同的 pack，此舉將會導致錯誤；但您的確可以載入複數 pack 並且交替使用其中的功能。pack 的搭配使用法則請參閱各個 pack 所提供的參考文件。
+</p>
+<h1 id="header11"><span class="headAnchor">2.</span>Translator Markup Pack</h1>
+<p>
+這個 markup pack 具備最基本的 XHTML 輔助製作功能，同時還提供一些產生書稿標示內容的特殊能力 &mdash; 因為最初的開發目標，就是讓本程式的作者能快速、簡易地排出自己希望的書稿樣式。
+</p>
+<p>
+由於輸出格式採用 XHTML 的關係，標籤組織刻意設計地十分貼近 XHTML，只提供一層薄薄的包裝、並透過一些預設樣式表達到效果，可說是為了便利現在已在使用 XHTML 的人所設計的；如果您是這種人的話，可能會發現文稿架構非常、非常地眼熟。
+</p>
+<p>
+使用 <code>translator</code> pack 的 tm 檔案典型架構如下 (直接取用本說明檔原始碼作為範例):
+</p>
+<pre class="pre">
+\use(translator)
+\lang[zh-tw]
+
+\title[Text Markup Processor 使用手冊]
+
+\filetoc
+\pagelist
+
+\body[[
+  ...
+]]
+</pre>
+<p>
+首先取用 <code>translator</code> pack，接著指定文件的語系 (<code>\lang</code>)、標題 (<code>\title</code>)，並且打開自動產生目錄 (<code>\filetoc</code>)、打開分頁模式產生頁面連結 (<code>\pagelist</code>) 等等功能；最後再以 <code>\body</code> 組織全篇頁面內容。
+</p>
+<p>
+由於輸出格式是 XHTML，為了便利起見，除了在特別提及的幾個標籤範圍之內 (比如說 <code>\code</code>)，其它地方都可以直接使用 XHTML 標籤；而大多數常用的標籤也都以 tmp 標籤的形式包裝提供 (如 <code>\br</code>、<code>\b</code>、<code>\lt</code> 等等)，便於您快速輸入相關內容。
+</p>
+<h2 id="header12"><span class="headAnchor">2.1.</span>內文分段</h2>
+<p>
+在處理文字內容的時候，換行會被忽略，連續的兩行會被接在一起；空行則代表新段落開始。如此有助於原始碼整理。段落的開頭會自動縮排；如果您不希望段落縮排的話，您可以直接使用 <code>\p</code> 標記整個段落。
+</p>
+<p>
+必須注意的是，為了不加入多餘的換行、段落，因此對於段落開頭、結尾處遇上標籤的情形會進行特殊處理。大部分情形下應會輸出與您預期相同的結果；如果遇上分段錯誤 (漏分段) 等等的情形，可嘗試在段落的開頭、結尾各加上一個空白再試試看。
+</p>
+<div class="boxHead">範例</div>
+<pre class="pre">
+第一段
+第二行
+
+第二段
+
+很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段
+很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段
+很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段
+很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段
+很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段
+
+\p[
+不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落
+不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落
+不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落
+不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落
+不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落
+]
+</pre>
+<div class="boxHead">處理結果</div>
+<div class="box ">
+<p>
+第一段第二行
+</p>
+<p>
+第二段
+</p>
+<p>
+很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段很長的一段
+</p>
+<p style="text-indent: 0;">
+不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落不內縮的段落</p>
+</div>
+<h2 id="header13"><span class="headAnchor">2.2.</span>標籤說明</h2>
+<h3 id="header14"><span class="headAnchor">2.2.1.</span>頁面選項設定</h3>
+<h4 id="header15"><span class="headAnchor">2.2.1.1.</span>選擇語系</h4>
+<p>
+您必須使用 <code>\lang</code> 標籤指定文件所使用的語系。儘管檔案內容一定以 UTF-8 儲存，仍然需要設定正確的檔案語系，因為這會影響瀏覽器選用的預設字型、以及文字避頭尾原則等語系相關特性。如果沒有指定語系的話，就會在處理時產生錯誤訊息。
+</p>
+<p>
+下面是幾個常用語系的設定:
+</p>
+<table cellspacing="0">
+<caption>語系範例</caption>
+<tr><th class="col">語系</th><th class="col">說明</th></tr>
+<tr><th class="row">zh-tw</th><td>繁體中文</td></tr>
+<tr><th class="row">zh-cn</th><td>簡體中文</td></tr>
+<tr><th class="row">ja</th><td>日文</td></tr>
+<tr><th class="row">en</th><td>英文</td></tr>
+</table>
+<div class="boxHead">範例</div>
+<pre class="pre">
+\lang[zh-tw]
+</pre>
+<h4 id="header16"><span class="headAnchor">2.2.1.2.</span>文件標題</h4>
+<p>
+您必須以 <code>\title</code> 標籤指定整份文件的標題。如果沒有指定標題的話，就會在處理時產生錯誤訊息。
+</p>
+<div class="boxHead">範例</div>
+<pre class="pre">
+\title[Text Markup Processor 使用手冊]
+</pre>
+<h4 id="header17"><span class="headAnchor">2.2.1.3.</span>內容組織功能</h4>
+<p>
+ <code>translator</code> 內建了一些自動組織內容的處理功能，預設不會開啟；若您想要使用這些功能的話，必須手動加上對應的標籤。
+</p>
+<ul>
+<li><div class="listItem"><code>\filetoc</code>: 自動產生目錄 (→ 請參閱「標題」)</div></li>
+<li><div class="listItem"><code>\pagelist</code>: 分頁模式 (→ 請參閱「頁數編碼」)</div></li>
+</ul>
+<h4 id="header18"><span class="headAnchor">2.2.1.4.</span>專案</h4>
+<p>
+您可使用 <code>\project</code> 標籤指定檔案所屬的專案，此時會在同一目錄下建立檔名是 <code>&lt;指定名稱&gt;.tpd</code> 的專案資料檔。
+</p>
+<p>
+專案資料檔內，會記錄專案內所有檔案的標題別名、頁碼、索引關鍵詞等資料，每次處理檔案時都會自動更新，便利您在檔案之間進行交叉索引、重複取用專有名詞解釋。詳情請參閱「<a href="#header19">標題</a>」以及「<a href="#header24">連結</a>」等段落。
+</p>
+<p>
+專案之內的所有檔案必須位於相同目錄之內，此版本尚未支援專案目錄結構。
+</p>
+<h3 id="header19"><span class="headAnchor">2.2.2.</span>標題</h3>
+<p>
+標題是以 <code>\h1</code> 到 <code>\h6</code> 六種標籤加以定義的。如果您先前以 <code>\buildtoc</code> 打開目錄產生功能的話，頁首的 Metadata 資料區之內就會多出 <b>Table of Contents</b> 這個段落，而所有文內標題都會自動依照階層順序在此建立對應的連結，方便往後閱覽。
+</p>
+<div class="boxHead">範例</div>
+<pre class="pre">
+\h1[Translator Markup Pack]
+\h2[標籤說明]
+\h3[頁面選項設定]
+\h4[標題 4]
+\h5[標題 5]
+\h6[標題 6]
+</pre>
+<div class="boxHead">處理結果 (前三大標題的效果請直接參考前段內容)</div>
+<h4 id="header20">標題 4</h4>
+<h5 id="header21">標題 5</h5>
+<h6 id="header22">標題 6</h6>
+<p>
+在啟動專案功能之後，您可為標題標籤加上參數設定別名，並且稍後在同一個專案之內的檔案裡面以 <code>\link</code> 連結回此一標題。
+</p>
+<p>
+為標題加上的別名，會變色顯示在標題之前；您可利用這項特點，直接將標題的序號部分編為別名使用。
+</p>
+<pre class="pre">
+\h1(1.)[大標題一]
+...
+\link[=1.]
+</pre>
+<p>
+使用上的注意事項則請參照 <a href="#header24">連結</a> 一節所述。
+</p>
+<h3 id="header23"><span class="headAnchor">2.2.3.</span>頁數編碼</h3>
+<p>
+您可以在內容之中以 <code>\page</code> 標籤標示目前頁次，頁次會出現在左邊的黃色頁邊範圍之內。如果您在檔案開頭加上 <code>\pagelist</code> 標籤的話，還會自動在頁首建立 <b>Page Link</b> 區域並產生連往各頁開頭的連結，讓您能夠直接跳躍到指定的頁面。
+</p>
+<p>
+如果在同一個 <code>\page</code> 標籤內以逗號列出許多個頁碼的話，即可連續列出這些頁碼，並且略去這些頁碼之間的頁面分隔線 (作者在遇到橫跨多頁的表格、操作步驟清單等內容的時候，不想把表格切斷，卻又想保留中途頁碼連結時常用)。
+</p>
+<p>
+Page Link 位於頁首的 Metadata 資料區之內，您可點選黃色的 Show/Hide Metadata 標籤切換本區域顯示與否。
+</p>
+<p>
+小技巧: 您隨時都能使用瀏覽器的 <span class="keyboard">Home</span> 鍵跳回頁首資料區。
+</p>
+<div class="boxHead">範例</div>
+<pre class="pre">
+\page[i]
+\page[xv]
+\page[1]
+\page[23]
+\page[456]
+\page[7890]
+\page[5,6,7,8,9]
+</pre>
+<div class="boxHead">處理結果 (請看左邊)</div>
+<div class="pageSeparator"></div>
+<div id="pagei" class="srcPage">p.i</div>
+<div class="pageSeparator"></div>
+<div class="pageSeparator"></div>
+<div id="pagexv" class="srcPage">p.xv</div>
+<div class="pageSeparator"></div>
+<div class="pageSeparator"></div>
+<div id="page1" class="srcPage">p.1</div>
+<div class="pageSeparator"></div>
+<div class="pageSeparator"></div>
+<div id="page23" class="srcPage">p.23</div>
+<div class="pageSeparator"></div>
+<div class="pageSeparator"></div>
+<div id="page456" class="srcPage">p.456</div>
+<div class="pageSeparator"></div>
+<div class="pageSeparator"></div>
+<div id="page7890" class="srcPage">p.7890</div>
+<div class="pageSeparator"></div>
+<div class="pageSeparator"></div>
+<div id="page5" class="srcPage">p.5</div>
+<div id="page6" class="srcPage" style="border-top: none;">p.6</div>
+<div id="page7" class="srcPage" style="border-top: none;">p.7</div>
+<div id="page8" class="srcPage" style="border-top: none;">p.8</div>
+<div id="page9" class="srcPage" style="border-top: none;">p.9</div>
+<div class="pageSeparator"></div>
+<h3 id="header24"><span class="headAnchor">2.2.4.</span>連結</h3>
+<p>
+連結功能由 <code>\link</code> 標籤提供。它的作用範圍即是要連結的網址，如果您希望自訂連結顯示文字的話，只要以參數的形式提供即可。
+</p>
+<div class="boxHead">範例</div>
+<pre class="pre">
+\link[http://www.google.com/], \link(Python 程式語言)[http://www.python.org/]
+</pre>
+<div class="boxHead">處理結果</div>
+<div class="box ">
+<a href="http://www.google.com/">http://www.google.com/</a>, <a href="http://www.python.org/">Python 程式語言</a>
+</div>
+<p>
+在啟動專案功能時，<code>\link</code> 標籤也能用來連結加了別名的標題；此時連結文字將自動取用對應別名的標題全文內容。連結標題別名的語法如下:
+</p>
+<pre class="pre">
+\link[=<b>&lt;標題別名&gt;</b>]
+</pre>
+<p>
+如果所指定的別名還不存在 (別名輸入錯誤；或者是別名所屬的檔案尚未處理，以致於別名尚未儲存至專案資料檔之內)，就會在處理完成的檔案開頭顯示錯誤訊息，方便您進行除錯工作。
+</p>
+<div class="boxHead">範例</div>
+<pre class="pre">
+\link[=2.2.5.]
+</pre>
+<div class="boxHead">處理結果</div>
+<div class="box ">
+<a href="#header26">HTML 特殊字元實體</a>
+</div>
+<h4 id="header25"><span class="headAnchor">2.2.4.1.</span>專案檔案的處理順序</h4>
+<p>
+專案檔案的處理順序是有影響的。簡單來說，在使用 <code>\link</code> 標籤造出連結之前，必須先處理好連結目標所在的檔案，如此才能產生正確的連結內容；然而檔案之間的交互參照通常十分複雜，整理出適當的處理順序似乎不切實際。
+</p>
+<p>
+其實有個簡單的做法，那就是<b>處理全部的檔案兩次</b> &mdash; 第一次處理將會造出完整的標題別名、所屬檔案表，第二次處理時則會正確完成所有的連結動作 (而那些真的錯誤的連結還是會留下警告訊息)。
+</p>
+<h3 id="header26"><span class="headAnchor">2.2.5.</span>HTML 特殊字元實體</h3>
+<p>
+ <code>translator</code> 將 HTML 常用的特殊字元實體改以標籤的形式提供，便於使用。
+</p>
+<table cellspacing="0">
+<caption>HTML 特殊字元實體</caption>
+<tr>
+  <th class="col">標籤</th>
+  <th class="col">名稱</th>
+  <th class="col">字元外觀</th>
+  <th class="col">使用例</th>
+  <th class="col">處理結果</th>
+</tr>
+<tr>
+  <th class="row"><b><code>\br</code></b></th>
+  <td>換行</td>
+  <td>&nbsp;</td>
+  <td><code>A\br[]B</code></td>
+  <td>A<br />B</td>
+</tr>
+<tr>
+  <th class="row"><b><code>\cent</code></b></th>
+  <td>分</td>
+  <td>&cent;</td>
+  <td><code>5\cent</code></td>
+  <td>5&cent;</td>
+</tr>
+<tr>
+  <th class="row"><b><code>\copy</code></b></th>
+  <td>版權</td>
+  <td>&copy;</td>
+  <td><code>\copy 2000 SBT</code></td>
+  <td>&copy; 2000 SBT</td>
+</tr>
+<tr>
+  <th class="row"><b><code>\deg</code></b></th>
+  <td>角度量</td>
+  <td>&deg;</td>
+  <td><code>90\deg</code></td>
+  <td>90&deg;</td>
+</tr>
+<tr>
+  <th class="row"><b><code>\euro</code></b></th>
+  <td>歐元符號</td>
+  <td>&euro;</td>
+  <td><code>\euro 50</code></td>
+  <td>&euro; 50</td>
+</tr>
+<tr>
+  <th class="row"><b><code>\lt</code></b>, <b><code>\gt</code></b></th>
+  <td>大於、小於符號</td>
+  <td>&lt; &gt;</td>
+  <td><code>\lt[]html\gt</code></td>
+  <td>&lt;html&gt;</td>
+</tr>
+<tr>
+  <th class="row"><b><code>\mdash</code></b>, <b><code>\dash</code></b></th>
+  <td>長破折號</td>
+  <td>&mdash;</td>
+  <td><code>It's a test \mdash yeah, really a test.</code></td>
+  <td>It's a test &mdash; yeah, really a test.</td>
+</tr>
+<tr>
+  <th class="row"><b><code>\ndash</code></b></th>
+  <td>短破折號</td>
+  <td>&ndash;</td>
+  <td><code>I'm at 177\ndash[]1</code></td>
+  <td>I'm at 177&ndash;1</td>
+</tr>
+<tr>
+  <th class="row"><b><code>\permil</code></b></th>
+  <td>千分比</td>
+  <td>&permil;</td>
+  <td><code>25\permil</code></td>
+  <td>25&permil;</td>
+</tr>
+<tr>
+  <th class="row"><b><code>\plusmn</code></b></th>
+  <td>正負</td>
+  <td>&plusmn;</td>
+  <td><code>\plusmn[]12V</code></td>
+  <td>&plusmn;12V</td>
+</tr>
+<tr>
+  <th class="row"><b><code>\pound</code></b></th>
+  <td>英鎊符號</td>
+  <td>&pound;</td>
+  <td><code>\pound[]500</code></td>
+  <td>&pound;500</td>
+</tr>
+<tr>
+  <th class="row"><b><code>\reg</code></b></th>
+  <td>註冊商標</td>
+  <td>&reg;</td>
+  <td><code>Linux\reg</code></td>
+  <td>Linux&reg;</td>
+</tr>
+<tr>
+  <th class="row"><b><code>\yen</code></b></th>
+  <td>日圓符號</td>
+  <td>&yen;</td>
+  <td><code>\yen[]7,140</code></td>
+  <td>&yen;7,140</td>
+</tr>
+</table>
+<h3 id="header27"><span class="headAnchor">2.2.6.</span>簡單的標記</h3>
+<p>
+以下是一些簡單的標記。「簡單」的意思是指，它們只改變一小段文字的外觀，使用時不進行額外的特殊處理、也不須想太多對版面佈局產生的衝擊。它們大部分也都與 HTML 直接對應。
+</p>
+<table cellspacing="0">
+<caption>簡單的標記</caption>
+<tr>
+  <th class="col">標籤</th>
+  <th class="col">名稱</th>
+  <th class="col">使用例</th>
+  <th class="col">處理結果</th>
+</tr>
+<tr>
+  <th style="text-align: left;" class="row"><b><code>\b</code></b></th>
+  <td>粗體</td>
+  <td><code>\b[bold]</code></td>
+  <td><b>bold</b></td>
+</tr>
+<tr>
+  <th style="text-align: left;" class="row"><b><code>\c</code></b></th>
+  <td>定寬 (程式碼)<br />範圍內的 HTML 會被自動跳脫</td>
+  <td><code>\c[&lt;html&gt;&lt;title&gt;Hello!&lt;/title&gt;&lt;/html&gt;]</code></td>
+  <td><code>&lt;html&gt;&lt;title&gt;Hello!&lt;/title&gt;&lt;/html&gt;</code></td>
+</tr>
+<tr>
+  <th style="text-align: left;" class="row"><b><code>\i</code></b></th>
+  <td>斜體</td>
+  <td><code>\i[italic]</code></td>
+  <td><i>italic</i></td>
+</tr>
+<tr>
+  <th style="text-align: left;" class="row"><b><code>\k</code></b></th>
+  <td>模擬鍵盤按鍵</td>
+  <td><code>\k[Enter]</code></td>
+  <td><span class="keyboard">Enter</span></td>
+</tr>
+<tr>
+  <th style="text-align: left;" class="row"><b><code>\nobr</code></b></th>
+  <td>標籤範圍之內不斷行</td>
+  <td colspan="2">(略)</td>
+</tr>
+<tr>
+  <th style="text-align: left;" class="row"><b><code>\quote</code></b></th>
+  <td>引言</td>
+  <td><code>\quote[If it ain't broken, don't fix it.]</code></td>
+  <td><blockquote>If it ain't broken, don't fix it.</blockquote></td>
+</tr>
+<tr>
+  <th style="text-align: left;" class="row"><b><code>\r</code></b></th>
+  <td>粗體紅標 (強調、警告事項等)</td>
+  <td><code>\r[redmark]</code></td>
+  <td><span class="redmark">redmark</span></td>
+</tr>
+<tr>
+  <th style="text-align: left;" class="row"><b><code>\u</code></b></th>
+  <td>加底線</td>
+  <td><code>\u[underline]</code></td>
+  <td><u>underline</u></td>
+</tr>
+<tr>
+  <th style="text-align: left;" class="row"><b><code>\y</code></b></th>
+  <td>黃色底</td>
+  <td><code>\y[yellow background]</code></td>
+  <td><span class="ybg">yellow background</span></td>
+</tr>
+<tr>
+  <th style="text-align: left;" class="row"><b><code>\o</code></b></th>
+  <td>橘色字</td>
+  <td><code>\o[orange bold]</code></td>
+  <td><span class="orange">orange bold</span></td>
+</tr>
+</table>
+<h3 id="header28"><span class="headAnchor">2.2.7.</span>表格</h3>
+<p>
+表格是以 <code>\table</code> 標籤進行標記的。一份表格是由許多以 <code>\tr</code> 標籤標記的<b>表格橫列</b>所構成，表格橫列則又是以 <code>\th</code>、<code>\td</code> 等標籤所標記的<b>資料格</b>所組成的。
+</p>
+<p>
+這兩種資料格之中，<code>\td</code> 是一般的資料格；<code>\th</code> 則是欄、列的標題，會自動根據出現的位置顯示成正確的標題外觀。
+</p>
+<p>
+緊接在 <code>\table</code> 標籤之後，您可接著使用 <code>\caption</code> 標籤標記整個表格的標題。這個標題的外觀刻意與 <code>\boxHead</code> 設計得十分類似，如此能夠維持內容風格的一致性。
+</p>
+<h4 id="header29"><span class="headAnchor">2.2.7.1.</span>格式化字串</h4>
+<p>
+為了簡潔地控制資料格之內的資料對齊方式，以及資料格的跨欄、跨列設定，此處引入「格式化字串」的概念；如果以參數的形式為資料格標籤加上格式化字串的話，就會依照指定的格式顯示資料格的內容。
+</p>
+<p>
+資料格的格式化字串主要以四個部分構成，分別控制跨欄、跨列、上下對齊、左右對齊；此四個部分必須<b>依照順序</b>出現，不需用到相關功能的部分則可直接跳過。如果覺得格式化字串之內的指定順序不好記憶，不妨試試看「橫豎上下左右」這個口訣 :)
+</p>
+<table cellspacing="0">
+<caption>表格的格式化字串</caption>
+<tr>
+  <th class="col">功能</th>
+  <th class="col">語法</th>
+  <th class="col">意義</th>
+</tr>
+<tr>
+  <th class="row">跨欄 (column)</th>
+  <td><b><code>c&lt;欄數&gt;</code></b></td>
+  <td>使資料格<b>向右</b>橫跨指定的格數</td>
+</tr>
+<tr>
+  <th class="row">跨列 (row)</th>
+  <td><b><code>r&lt;列數&gt;</code></b></td>
+  <td>使資料格<b>向下</b>橫跨指定的格數</td>
+</tr>
+<tr>
+  <th style="vertical-align: middle;" class="row" rowspan="3">上下對齊</th>
+  <td><b><code>t</code></b></td>
+  <td>內容貼齊資料格頂端 (top)</td>
+</tr>
+<tr>
+  <td><b><code>m</code></b></td>
+  <td>內容上下對齊資料格中間 (middle)</td>
+</tr>
+<tr>
+  <td><b><code>b</code></b></td>
+  <td>內容貼齊資料格底部 (bottom)</td>
+</tr>
+<tr>
+  <th style="vertical-align: middle;" class="row" rowspan="3">左右對齊</th>
+  <td><b><code>l</code></b></td>
+  <td>內容貼齊資料格左側 (left)</td>
+</tr>
+<tr>
+  <td><b><code>c</code></b></td>
+  <td>內容左右對齊資料格中間 (center)</td>
+</tr>
+<tr>
+  <td><b><code>r</code></b></td>
+  <td>內容貼齊資料格右側 (right)</td>
+</tr>
+</table>
+<h5 id="header30">格式化字串，舉例</h5>
+<p>
+ <code>\th(r)</code> → 內容靠右對齊的標題。
+</p>
+<p>
+ <code>\td(c3c)</code> → 橫跨三格 (總共佔三格空間)，內容左右正中排列的資料格。
+</p>
+<p>
+ <code>\th(r2c2br)</code> → 橫跨兩欄兩列 (佔用田字形四格)，內容靠右靠下顯示的標題。
+</p>
+<h5 id="header31">實際表格舉例</h5>
+<div class="boxHead">原始碼</div>
+<pre class="pre">
+\table[
+  \caption[Table title!]
+  \tr[
+    \th[a long long long long content]
+    \th(r2b)[rowspan 2, bottom]
+    \th[blahugh]
+  ]
+  \tr[
+    \th(r)[so this right\br[]line 2\br[]line 3]
+    \td(t)[on the top]
+  ]
+  \tr[
+    \th[row header]
+    \td[normal data cell?]
+    \td[another one]
+  ]
+]
+</pre>
+<div class="boxHead">處理結果</div>
+<div class="box ">
+<table cellspacing="0">
+  <caption>Table title!</caption>
+  <tr>
+    <th class="col">a long long long long content</th>
+    <th style="vertical-align: bottom;" class="col" rowspan="2">rowspan 2, bottom</th>
+    <th class="col">blahugh</th>
+  </tr>
+  <tr>
+    <th style="text-align: right;" class="row">so this right<br />line 2<br />line 3</th>
+    <td style="vertical-align: top;">on the top</td>
+  </tr>
+  <tr>
+    <th class="row">row header</th>
+    <td>normal data cell?</td>
+    <td>another one</td>
+  </tr>
+</table>
+</div>
+<h3 id="header32"><span class="headAnchor">2.2.8.</span>清單</h3>
+<h4 id="header33"><span class="headAnchor">2.2.8.1.</span>一般清單</h4>
+<p>
+一般清單的功能由 <code>\ul</code>、<code>\ol</code>、<code>\li</code> 這三個與同名 XHTML 標籤功能一樣的標籤提供。<code>\ul</code> 代表無序清單，<code>\ol</code> 代表有序清單，而 <code>\li</code> 則代表清單之內的項目。如果需要多層清單的話，只要把清單擺在清單裡面就可以了 (也就是「巢狀」使用清單)。
+</p>
+<div class="boxHead">範例</div>
+<pre class="pre">
+\ul[
+  \li[A]
+  \li[B]
+  \ol[
+    \li[C]
+    \li[D]
+  ]
+  \li[E]
+  \li[F]
+]
+</pre>
+<div class="boxHead">處理結果</div>
+<div class="box ">
+<ul>
+  <li><div class="listItem">A</div></li>
+  <li><div class="listItem">B</div></li>
+  <ol>
+    <li><div class="listItem">C</div></li>
+    <li><div class="listItem">D</div></li>
+  </ol>
+  <li><div class="listItem">E</div></li>
+  <li><div class="listItem">F</div></li>
+</ul>
+</div>
+<h4 id="header34"><span class="headAnchor">2.2.8.2.</span>定義清單</h4>
+<p>
+定義清單，顧名思義，就是用來為一群詞語提供定義、解釋用的。這部分一共以三個標籤構成: 標記清單本體的 <code>\dl</code> 標籤、標記詞語 (term) 的 <code>\dt</code> 標籤、以及標記定義內容 (definition) 的 <code>\dd</code> 標籤。
+</p>
+<div class="boxHead">範例</div>
+<pre class="pre">
+\dl[
+\dt[TMP]
+\dd[
+Text Markup Processor 的縮寫 (或許也隱含著「暫時性解決方案、不嚴謹」之類的
+意思？
+]
+]
+</pre>
+<div class="boxHead">處理結果</div>
+<div class="box ">
+<dl>
+<dt>TMP</dt>
+<dd>
+Text Markup Processor 的縮寫 (或許也隱含著「暫時性解決方案、不嚴謹」之類的意思？</dd>
+</dl>
+</div>
+<h3 id="header35"><span class="headAnchor">2.2.9.</span>方塊</h3>
+<p>
+在 <code>translator</code> 之中的方塊功能是由 <code>\boxHead</code> (方塊標題)、<code>\box</code> (方塊本體) 與 <code>\code</code> (程式碼方塊) 這三個標籤配合提供的。
+</p>
+<p>
+由於未必每個方塊都會需要標題，同時顧慮到方塊標題之內使用其他標籤、以及方塊標題配合其他「類方塊」內容使用的便利性，因此方塊標題並不是 <code>\box</code> 標籤的參數，而是個獨立的標籤。
+</p>
+<p>
+這幾個標籤除了 <code>\box</code> 之外都不需參數，而包含 <code>\box</code> 在內的所有標籤，都是將作用範圍直接變為內容。<code>\box</code> 只有一個可以省略的參數，如果指定了這個參數的話，就會出現與之對應的方塊類型；否則就只會出現一個單調的黑色外框。目前程式所提供的方塊類型實例、名稱請參閱稍後提供的應用示範。
+</p>
+<h4 id="header36"><span class="headAnchor">2.2.9.1.</span>方塊標題與方塊的組合</h4>
+<p>
+方塊標題與方塊的設計並未強迫兩者搭配使用，事實上的確也經常遇到內文出現一個無標題註解框，或是圖片內容不須多加說明、只須提供標題即可的情形；而 <code>\boxHead</code> 與 <code>\box</code> 事實上的確也可以獨立應用。
+</p>
+<p>
+儘管如此，如果遇到想為方塊加上標題的情形，只要直接將 <code>\boxHead</code> 放在 <code>\box</code> 前面，使兩者位於同一行，或是分別放到兩行裡、中間不要留下空行即可 &mdash; 如此一來方塊標題與方塊就會自動「黏」在一起，無須多加費心！
+</p>
+<h4 id="header37"><span class="headAnchor">2.2.9.2.</span>程式碼方塊</h4>
+<p>
+以 <code>\code</code> 標籤標記的程式碼區塊會改用定寬文字顯示，同時保留所有空白、換行等特殊字元，以便清楚顯示程式碼的內容。
+</p>
+<p>
+由於忠實保留所有特殊字元的緣故，程式碼區塊之內無法使用 XHTML 語法。不過，稍早在「簡單的標記」一節內介紹過的標籤不受這個限制影響，在程式碼區塊內仍然可以用來強調、標記原始碼內容！ (當然，這也代表您仍然必須留意前述的特殊字元跳脫規則，比如說反斜線前面要記得補上反斜線之類的 ... 仍然沒什麼概念的話，麻煩請回頭複習一下。)
+</p>
+<div class="boxHead">原始碼</div>
+<pre class="pre">
+\code[[
+import sys
+
+if __name__ == '__main__':
+  if sys.argc &lt; 3:
+    print 'Usage: blahblah\\n'
+    return 1
+
+  if sys.argv[1] &amp;&amp; sys.argv[2]:
+    \b[print 'Oh yeah!']
+]]
+</pre>
+<div class="boxHead">處理結果</div>
+<div class="box ">
+<pre class="pre">
+import sys
+
+if __name__ == '__main__':
+  if sys.argc &lt; 3:
+    print 'Usage: blahblah\n'
+    return 1
+
+  if sys.argv[1] &amp;&amp; sys.argv[2]:
+    <b>print 'Oh yeah!'</b>
+</pre>
+</div>
+<h4 id="header38"><span class="headAnchor">2.2.9.3.</span>各種方塊的應用示範</h4>
+<div class="boxHead">原始碼</div>
+<pre class="pre">
+\boxHead[程式碼方塊]
+\code[[
+#include &lt;iostream&gt;
+
+int main (int argc, char *argv[])
+{
+    cout &lt;&lt; &quot;Hello World!&quot; &lt;&lt; endl;
+    return 0;
+}
+]]
+
+\boxHead[一般方塊 \dash 標題裡頭要\b[耍]\i[特]\u[效]當然沒問題]
+\box[
+沒加任何參數，所以沒啥特殊的
+]
+
+\boxHead[註解方塊 (comment)]
+\box(comment)[
+這是正文的註解內容
+]
+
+\boxHead[編輯註解方塊 (editor)]
+\box(editor)[
+這是給編輯部看的註解
+]
+
+一小段文字
+
+\boxHead[圖表內容方塊 (figure)]
+\box(figure)[
+這是圖表內容的翻譯、說明
+]
+
+又一段文字
+
+\box(comment)[一個註解方塊 \dash 請觀察文字段落與方塊、方塊標題之間的排列關係。]
+
+另一段文字
+
+\boxHead[這是獨立的方塊標題]
+
+再來一行文字
+</pre>
+<div class="boxHead">處理結果</div>
+<div class="box ">
+<div class="boxHead">程式碼方塊</div>
+<pre class="pre">
+#include &lt;iostream&gt;
+
+int main (int argc, char *argv[])
+{
+    cout &lt;&lt; &quot;Hello World!&quot; &lt;&lt; endl;
+    <span class="ybg">return 0;</span>
+}
+</pre>
+<div class="boxHead">一般方塊 &mdash; 標題裡頭要<b>耍</b><i>特</i><u>效</u>當然沒問題</div>
+<div class="box ">
+沒加任何參數，所以沒啥特殊的</div>
+<div class="boxHead">註解方塊 (comment)</div>
+<div class="box comment">
+這是正文的註解內容</div>
+<div class="boxHead">編輯註解方塊 (editor)</div>
+<div class="box editor">
+這是給編輯部看的註解</div>
+<p>
+一小段文字
+</p>
+<div class="boxHead">圖表內容方塊 (figure)</div>
+<div class="box figure">
+這是圖表內容的翻譯、說明</div>
+<p>
+又一段文字
+</p>
+<div class="box comment">一個註解方塊 &mdash; 請觀察文字段落與方塊、方塊標題之間的排列關係。</div>
+<p>
+另一段文字
+</p>
+<div class="boxHead">這是獨立的方塊標題</div>
+<p>
+再來一行文字
+</p>
+</div>
+<h3 id="header39"><span class="headAnchor">2.2.10.</span>註腳</h3>
+<p>
+文內可使用 <code>\fn</code> (footnote) 安插註腳。
+</p>
+<p>
+註腳會自動進行編號，並且每段統整之後浮動顯示於段落右方。
+</p>
+<p>
+如果需要特殊註腳標籤的話，只要以第一個參數提供即可，自動編號不會跟著跳號哦！
+</p>
+<div class="boxHead">範例</div>
+<pre class="pre">
+這是段落\fn[第一個註腳]這是段落這是段落這是段落這是段落這是段落
+這是段落這是段落
+這是段落這是段落這是段落這是段落這是段落這是段落這是段落這是段落
+這是段落\fn[很長的註腳\br[]很長的註腳\br[]很長的註腳\br[]很長的註腳\br[]很長的註腳
+很長的註腳很長的註腳]這是段落這是段落這\fn(譯註)[測試譯註]是段落這\fn[another]是段落這\fn(譯註)[再來一個]是段落
+這是段落這是段落
+
+下一段\fn[第三個註腳，應該要躲開上一段的註腳]下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段
+下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段
+下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段
+下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段
+下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段
+</pre>
+<div class="boxHead">處理結果</div>
+<div class="box ">
+<div class="box comment footnote">
+<p><a name="fn1" /><a href="#fa1" class="fnitem">*1</a>:
+第一個註腳
+</p>
+<br />
+<p><a name="fn2" /><a href="#fa2" class="fnitem">*2</a>:
+很長的註腳<br />很長的註腳<br />很長的註腳<br />很長的註腳<br />很長的註腳
+很長的註腳很長的註腳
+</p>
+<br />
+<p><a name="fn譯註" /><a href="#fa譯註" class="fnitem">*譯註</a>:
+測試譯註
+</p>
+<br />
+<p><a name="fn3" /><a href="#fa3" class="fnitem">*3</a>:
+another
+</p>
+<br />
+<p><a name="fn譯註" /><a href="#fa譯註" class="fnitem">*譯註</a>:
+再來一個
+</p>
+</div>
+<p>
+這是段落<!-- footnote 0 --><a name="fa1" /><a href="#fn1" class="fnanchor">*1</a>這是段落這是段落這是段落這是段落這是段落這是段落這是段落這是段落這是段落這是段落這是段落這是段落這是段落這是段落這是段落這是段落<!-- footnote 1 --><a name="fa2" /><a href="#fn2" class="fnanchor">*2</a>這是段落這是段落這<!-- footnote 2 --><a name="fa譯註" /><a href="#fn譯註" class="fnanchor">*譯註</a>是段落這<!-- footnote 3 --><a name="fa3" /><a href="#fn3" class="fnanchor">*3</a>是段落這<!-- footnote 4 --><a name="fa譯註" /><a href="#fn譯註" class="fnanchor">*譯註</a>是段落這是段落這是段落
+</p>
+<div class="box comment footnote">
+<p><a name="fn4" /><a href="#fa4" class="fnitem">*4</a>:
+第三個註腳，應該要躲開上一段的註腳
+</p>
+</div>
+<p>
+下一段<!-- footnote 5 --><a name="fa4" /><a href="#fn4" class="fnanchor">*4</a>下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段下一段
+</p>
+</div>
+<p>
+文內註腳編號與註腳內容可交互連結，方便查閱。
+</p>
+<h3 id="header40"><span class="headAnchor">2.2.11.</span>連結項目</h3>
+<p>
+測試
+</p>
+<p class="label"><span class="label url">URL</span><b>Python</b><br /><a href="http://www.python.org/" target="_blank">http://www.python.org/</a></p>
+<p>
+測試
+</p>
+<h3 id="header41"><span class="headAnchor">2.2.12.</span>TODO: 自動索引</h3>
+<p>
+以 <code>\kw</code> (keyword) 指定文內需要排入索引的關鍵字。
+</p>
+<h3 id="header42"><span class="headAnchor">2.2.13.</span>TODO: 內嵌數學式</h3>
+<p>
+ <code>\math</code> 透過 mimeTeX 輔助，以 TeX 語法內嵌數學式圖檔。
+</p>
+<h3 id="header43"><span class="headAnchor">2.2.14.</span>TODO: 專欄</h3>
+<div class="box columnbox note"><img src="note.png" class="column" /><div class="heading"><span class="type">Note</span></div><div style="clear: both; padding-bottom: 1em;"></div><div class="column">
+<p>
+沒有標題的備註
+</p>
+</div></div>
+<div class="box columnbox note"><img src="note.png" class="column" /><div class="heading"><span class="type">Note</span><br /><span class="desc">測試</span></div><div style="clear: both; padding-bottom: 1em;"></div><div class="column">
+<p>
+有標題的備註
+</p>
+</div></div>
+<div class="box columnbox tip"><img src="tip.png" class="column" /><div class="heading"><span class="type">Tip</span></div><div style="clear: both; padding-bottom: 1em;"></div><div class="column">
+<p>
+小技巧
+</p>
+</div></div>
+<div class="box columnbox caution"><img src="caution.png" class="column" /><div class="heading"><span class="type">Caution</span></div><div style="clear: both; padding-bottom: 1em;"></div><div class="column">
+<p>
+注意
+</p>
+</div></div>
+<div class="box columnbox transnote"><img src="transnote.png" class="column" /><div class="heading"><span class="type">Translator's Note</span></div><div style="clear: both; padding-bottom: 1em;"></div><div class="column">
+<p>
+譯註
+</p>
+</div></div></div><div class="footer">
+made with Tiberius' <a href="#">Text Markup Processor</a><br /> using <i>Translator</i> markup pack - style sheet original designed by <a href="http://d.hatena.ne.jp/buttw/">but</a>.
+</div>
+</body>
+</html>

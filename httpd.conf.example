@@ -1,0 +1,6 @@
+<FilesMatch "\.tm">
+	SetHandler		mod_python
+	PythonPath		"['/path/to/tmp.py']+sys.path"
+	PythonHandler	modpy_tmp
+	PythonDebug		On
+</FilesMatch>
