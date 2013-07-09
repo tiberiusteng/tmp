@@ -1137,8 +1137,12 @@ def body(args, body, fileName, line, column, **kw):
             max_page_length = max([len(x) for x in pageIndex])
             page_link = '<a href="#page%%s">p.%%%ds</a>' % max_page_length
 
+            def chunks(l, n):
+              for i in xrange(0, len(l), n):
+                yield l[i:i+n]
+
             meta += ['<dl id="pageList"><dt>Page list</dt><dd>\n']
-            meta += [string.join([page_link % (x, x) for x in pageIndex], ' / \n')]
+            meta += ['<br/>'.join([' / \n'.join(x) for x in chunks([page_link % (x, x) for x in pageIndex], 10)])]
             meta += ['\n</dd></dl>\n']
 
         # generate table of contents
@@ -1525,7 +1529,7 @@ _simpleMacros = {
     'dt':           ['<dt>', '</dt>'],
     'i':            ['<i>', '</i>'],
     'k':            ['<kbd class="keyboard">', '</kbd>'],
-    'm':            ['\\(', '\\)'],
+    'm':            ['\\(\\displaystyle ', '\\)'],
     'nobr':         ['<nobr>', '</nobr>'],
     'o':            ['<span class="orange">', '</span>'],
     'p':            ['<p style="text-indent: 0;">', '</p>'],
