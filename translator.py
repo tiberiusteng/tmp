@@ -335,8 +335,8 @@ div.metaInfo {
 }
 
 div.pageSeparator {
-/*  border-top: 1px solid #479; */
-    clear: both;
+/*  border-top: 1px solid #479;
+    clear: both; */
     margin: 1em 0 1em 0;
 }
 
@@ -359,6 +359,10 @@ dl {
 
 dl dt {
     font-weight: bold;
+}
+
+dl dt.normal-weight {
+    font-weight: normal;
 }
 
 dl dd {
@@ -668,8 +672,7 @@ u {
 """
 
 _pageHead = """\
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="" lang="" dir="ltr">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -1527,6 +1530,7 @@ _simpleMacros = {
     'dl':           ['<dl>', '</dl>'],
     'dd':           ['<dd>', '</dd>'],
     'dt':           ['<dt>', '</dt>'],
+    'dtn':          ['<dt class="normal-weight">', '</dt>'],
     'i':            ['<i>', '</i>'],
     'k':            ['<kbd class="keyboard">', '</kbd>'],
     'm':            ['\\(\\displaystyle ', '\\)'],

@@ -1,4 +1,4 @@
-import os, tmp, tpg
+import os, pprint, tmp, tpg
 
 try:
     import psyco
